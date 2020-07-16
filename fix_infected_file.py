@@ -21,38 +21,46 @@ if k != "yes":
     exit(0)
 
 
+regex = []
+
+## General Small JS Payloads (html, index etc...)
+for URL in JS_Payload_links:
+    regex.append([re.compile("""(<script[^<>]*['"]"""+re.escape(URL).replace('/','\\/')+"""[^<>]*><\/script>)"""),""])
+    
+
+## General PHP Payload 
+regex.append([re.compile("""(<\?php \$c = chr\(98\)\.chr\(97\)\.chr\(115\)\.chr\(101\)\.chr\(54\)\.chr\(52\)\.chr\(95\)\.chr\(100\)\.chr\(101\)[^<>]* \?>)"""),""])
+
+
 ## LOBBYDESIRES.COM VERSION PAYLOADS
 
-# Small JS Payloads (html, index etc...)
-regex = [[re.compile("""(<script[^<>]*['"]http[s]?:\/\/lobbydesires\.com\/location.js[^<>]*><\/script>)"""),""],
-
 # PHP payload
-[re.compile("""(<\?php \$c1 = [^?><]*lobbydesires.com[^>?<]*<\?php[^?><]*file_get_contents\(\$c1\)\)\); \?>)"""),""],
+regex.append([re.compile("""(<\?php \$c1 = [^?><]*lobbydesires.com[^>?<]*<\?php[^?><]*file_get_contents\(\$c1\)\)\); \?>)"""),""])
 
 # Theme JS payload 1 
-[re.compile("""(<script type=text\/javascript> Element\.prototype\.appendAfter[^><]*116,101,120,116,47,106,97,118,97,115,99,114,105,112,116[^><]*\[0\]\.appendChild\(elem\);}\)\(\);<\/script><\/head>)"""),'</head>'],
+regex.append([re.compile("""(<script type=text\/javascript> Element\.prototype\.appendAfter[^><]*116,101,120,116,47,106,97,118,97,115,99,114,105,112,116[^><]*\[0\]\.appendChild\(elem\);}\)\(\);<\/script><\/head>)"""),'</head>'])
 
 # Theme JS payload 2 
-[re.compile("""(<head><script type=text\/javascript> Element\.prototype\.appendAfter[^><]*116,101,120,116,47,106,97,118,97,115,99,114,105,112,116[^><]*\[0\]\.appendChild\(elem\);}\)\(\);<\/script>)"""),"<head>"],
+regex.append([re.compile("""(<head><script type=text\/javascript> Element\.prototype\.appendAfter[^><]*116,101,120,116,47,106,97,118,97,115,99,114,105,112,116[^><]*\[0\]\.appendChild\(elem\);}\)\(\);<\/script>)"""),"<head>"])
 
 # Full JS payload
-[re.compile("""(Element\.prototype\.appendAfter = function\(element\) {element\.parentNode\.insertBefore\(this, element\.nextSibling\);}, false;\(function\(\) { var elem = document\.createElement\(String\.fromCharCode\(115,99,114,105,112,116\)\); elem\.type = String\.fromCharCode\(116,101,120,116,47,106,97,118,97,115,99,114,105,112[^\n]*String\.fromCharCode\(104,101,97,100\)\)\[0\]\.appendChild\(elem\);}\)\(\);)"""),""],
+regex.append([re.compile("""(Element\.prototype\.appendAfter = function\(element\) {element\.parentNode\.insertBefore\(this, element\.nextSibling\);}, false;\(function\(\) { var elem = document\.createElement\(String\.fromCharCode\(115,99,114,105,112,116\)\); elem\.type = String\.fromCharCode\(116,101,120,116,47,106,97,118,97,115,99,114,105,112[^\n]*String\.fromCharCode\(104,101,97,100\)\)\[0\]\.appendChild\(elem\);}\)\(\);)"""),""])
 
 
 ## Payloads added in LETSMAKEPARTY3.GA VERSION 
 
 # Domain replacement in includes
-[re.compile("""https:\/\/letsmakeparty3.ga\/type\.js\?v=14ll"""),domain],
+regex.append([re.compile("""https:\/\/letsmakeparty3.ga\/type\.js\?v=14ll"""),domain])
 
 # PHP payload
-[re.compile("""(<\?php function makemee\(\){[^}]*\$actual_link\);}\$lastRunLog.*\?>[\n]?<script[^<>]*['"]http[s]?:\/\/letsmakeparty3\.ga\/l.js[^<>]*><\/script>)"""),""],
+regex.append([re.compile("""(<\?php function makemee\(\){[^}]*\$actual_link\);}\$lastRunLog[^}]*}} else[^}]*}\?><\?php[^}]*} \?>)"""),""])
 
 # Small JS Payloads (html, index etc...)
-[re.compile("""(<script[^<>]*['"]http[s]?:\/\/letsmakeparty3\.ga\/l.js[^<>]*><\/script>)"""),""],
+regex.append([re.compile("""(<script[^<>]*['"]http[s]?:\/\/letsmakeparty3\.ga\/l.js[^<>]*><\/script>)"""),""])
 
 # Full JS payload
-[re.compile("""(%3C%3Fphp%20function%20makemee\(\)%7B%24n2%20%3D%20%22base64_decode%22%3B%24c1%20%3D%20chr\(104\)\.chr\(116\)\.chr\(116\)\.chr\(112\)\.chr\(115\)\.chr\(58\)\.chr\(47\)\.chr\(47\)\.chr\(108\)\.chr\(101\)\.chr[^<>]*letsmakeparty3\.ga%2Fl\.js%3Fq%3D1'%20type%3D'text%2Fjavascript'%3E%3C%2Fscript%3E)"""),""],
-]
+regex.append([re.compile("""(%3C%3Fphp%20function%20makemee\(\)%7B%24n2%20%3D%20%22base64_decode%22%3B%24c1%20%3D%20chr\(104\)\.chr\(116\)\.chr\(116\)\.chr\(112\)\.chr\(115\)\.chr\(58\)\.chr\(47\)\.chr\(47\)\.chr\(108\)\.chr\(101\)\.chr[^<>]*letsmakeparty3\.ga%2Fl\.js%3Fq%3D1'%20type%3D'text%2Fjavascript'%3E%3C%2Fscript%3E)"""),""])
+
 
 fixed = 0
 
