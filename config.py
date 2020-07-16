@@ -15,5 +15,46 @@ class c:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-# Infection detection regex
-regex = """(lobbydesires\.com)|(String\.fromCharCode\(104,116,116,112,115,58,47,47,108,111,98,98,121,100,101,115,105,114,101,115,46,99,111,109,47,108,111,99,97,116,105,111,110,46,106,115,63,115,61,49\))|(107,46,100,101,118,101,108,111)|(108,111,98,98,121,100,101,115,105,114,101,115)|(116,101,120,116,47,106,97,118,97,115,99,114,105,112,116)|(function makemee)|(chr\(104\)\.chr\(116\)\.chr\(116\)\.chr\(112\)\.chr\(115\)\.chr\(58\)\.chr\(47\)\.chr\(47\)\.chr\(108\)\.chr\(101\)\.chr\(116\)\.chr\(115\)\.chr\(109\)\.chr\(97\)\.chr\(107\)\.chr\(101\)\.chr\(112\)\.chr\(97\)\.chr\(114\)\.chr\(116\))|(letsmakeparty3.ga)|(104,116,116,112,115,58,47,47,108,101,116,115,109,97,107,101,112,97,114,116,121,51,46,103,97,47,108,46,106,115,63,100,61,49)|()|(stivenfernando.com)"""
+
+##########################################
+## JS Payloads links (without get args) ##
+##########################################
+
+JS_Payload_links = [ "https://lobbydesires.com/location.js",
+                     "https://letsmakeparty3.ga/type.js",
+                     "https://letsmakeparty3.ga/l.js",
+                     "https://ws.stivenfernando.com/stm.js"]
+
+
+
+###############################
+## Infection detection regex ##
+###############################
+
+# domain name
+regex = "(lobbydesires\.com)"
+regex += "|(stivenfernando\.com)"
+regex += "|(letsmakeparty3\.ga)"
+regex += "|(developfirstline\.com)"
+
+
+#regex += "|(107,46,100,101,118,101,108,111)"
+
+
+## JS
+# (general) "text/javascript" string offuscated 
+regex += "|(116,101,120,116,47,106,97,118,97,115,99,114,105,112,116)"
+
+regex += "|(function makemee)"
+
+# "lobbydesires" string offuscated
+regex += "|(108,111,98,98,121,100,101,115,105,114,101,115)"
+
+
+
+## PHP
+# (general) "base64_dec" string offuscated in PHP
+regex += "|(chr\(98\)\.chr\(97\)\.chr\(115\)\.chr\(101\)\.chr\(54\)\.chr\(52\)\.chr\(95\)\.chr\(100\)\.chr\(101\)\.chr\(99\))"
+
+# "https://letsmakeparty" string offuscated in PHP
+regex += "|(chr\(104\)\.chr\(116\)\.chr\(116\)\.chr\(112\)\.chr\(115\)\.chr\(58\)\.chr\(47\)\.chr\(47\)\.chr\(108\)\.chr\(101\)\.chr\(116\)\.chr\(115\)\.chr\(109\)\.chr\(97\)\.chr\(107\)\.chr\(101\)\.chr\(112\)\.chr\(97\)\.chr\(114\)\.chr\(116\))"
