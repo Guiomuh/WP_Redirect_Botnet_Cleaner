@@ -9,6 +9,8 @@ Based on XSS Stored vulnerabilities in various themes & plugins
 This botnet use the following domain names:
 - letsmakeparty3.ga
 - lobbydesires.com
+- train.developfirstline.com
+- ws.stivenfernando.com
 
 This malware is very invasive it can infect all js, php, html files and even the database of your WordPress.
 
