@@ -19,7 +19,7 @@ if len(sys.argv) != 2:
 p = sys.argv[1]
 
 print("\n[*] Search for JS, HTML & PHP files..")
-myfiles = list(Path(p).rglob("*.js")) + list(Path(p).rglob("*.ph*")) + list(Path(p).rglob("*.htm*"))
+myfiles = list(Path(p).rglob("*.js*")) + list(Path(p).rglob("*.ph*")) + list(Path(p).rglob("*.htm*"))
 print("\n[*] "+c.GREEN+str(len(myfiles))+c.ENDC+" files found")
 
 INFECTED = []
