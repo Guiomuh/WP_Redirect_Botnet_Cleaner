@@ -45,6 +45,31 @@ JS_Payload_links = [ "https://lobbydesires.com/location.js",
                      "https://ws.stivenfernando.com/stm.js"]
 
 
+###################
+## Signature STR ##
+###################
+
+SIG = [ "lobbydesires.com",
+        "letsmakeparty3.ga",
+        "stivenfernando.com",
+        "developfirstline" ]
+
+## Auto generate PHP/JS offuscated payloads from signature str
+
+p_JS = ""
+p_PHP = ""
+
+for sig in SIG:
+    p_JS += "|("
+    p_PHP += "|("
+
+    for char in sig:
+        p_JS += str(ord(char)) + ","
+        p_PHP += "chr\\(" + str(ord(char)) + "\\)\\."
+
+    p_JS = p_JS[:-2] + ")"
+    p_PHP = p_PHP[:-2] + ")"
+
 
 ###############################
 ## Infection detection regex ##
@@ -57,19 +82,26 @@ regex += "|(letsmakeparty3\.ga)"
 regex += "|(developfirstline\.com)"
 
 
-## JS
+########
+## JS ##
+########
+
 # (general) "text/javascript" string offuscated 
 regex += "|(116,101,120,116,47,106,97,118,97,115,99,114,105,112,116)"
 
+# (autogen from sig)
+regex += p_JS
+
+# letsmakeparty3 special function name
 regex += "|(function makemee)"
 
-# "lobbydesires" string offuscated
-regex += "|(108,111,98,98,121,100,101,115,105,114,101,115)"
 
+#########
+## PHP ##
+#########
 
-## PHP
 # (general) "base64_dec" string offuscated in PHP
 regex += "|(chr\(98\)\.chr\(97\)\.chr\(115\)\.chr\(101\)\.chr\(54\)\.chr\(52\)\.chr\(95\)\.chr\(100\)\.chr\(101\)\.chr\(99\))"
 
-# "https://letsmakeparty" string offuscated in PHP
-regex += "|(chr\(104\)\.chr\(116\)\.chr\(116\)\.chr\(112\)\.chr\(115\)\.chr\(58\)\.chr\(47\)\.chr\(47\)\.chr\(108\)\.chr\(101\)\.chr\(116\)\.chr\(115\)\.chr\(109\)\.chr\(97\)\.chr\(107\)\.chr\(101\)\.chr\(112\)\.chr\(97\)\.chr\(114\)\.chr\(116\))"
+# (autogen from sig)
+regex += p_PHP
