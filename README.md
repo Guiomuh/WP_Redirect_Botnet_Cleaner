@@ -1,5 +1,4 @@
 # WordPress Redirect Botnet Cleaner 
-(letsmakeparty3.ga, lobbydesires.com)
 
 ## Intro 
 
@@ -12,11 +11,13 @@ This botnet use the following domain names:
 - train.developfirstline.com
 - ws.stivenfernando.com
 
-This malware is very invasive it can infect all js, php, html files and even the database of your WordPress.
+This malware is very invasive it can infect all js, php, html files and all articles in the database of your WordPress.
+
+In some cases the `home_url` and `site_url` of your website are replaced by the malware domain causing redirections.
 
 After some work I decided to make these scripts to easily detect & patch infected WordPress.
 
-You can find the PART1 of my work on the "lobbydesires.com" version [HERE](https://medium.com/@guillaume.muh/lobbydesires-botnet-927bbc139457)<br>
+You can find the PART1 of my work on the "lobbydesires.com" version [HERE](https://medium.com/@guillaume.muh/lobbydesires-botnet-927bbc139457) (FRENCH)<br>
 The PART2 on the more complex version "letsmakeparty3.ga" is coming soon.. 
 
 
@@ -35,35 +36,44 @@ python3 -m pip install tqdm mysql-connector-python
 Search all js, php & html files recursively in the given path and list the infected ones in the file `infected_list.txt`<br>
 Then you can use this list with the `fix_infected_file.py` script to fix them.
 
+This script also search for temp/log files used by the malware and raise an alert but this files aren't deleted in the `fix_infected_file.py` script due to the high risk of false positive.
 
 #### fix_infected_file.py
 ```
-./fix_infected_file.py <INFECTED_FILES_LIST> <FULL_DOMAIN_NAME>
+./fix_infected_file.py <INFECTED_FILES_LIST>
 ```
-This script use the file created by `detect_infected_files.py` to fix all infected files.<br>
-In some cases the malware replace the `wp_host_url` of your site with a bad one !<br>
-That's why this script need your full domain name (like 'https://example.com') to fix that
+This script use the file created by `detect_infected_files.py` to fix all infected files.<br><br>
+
+Before running this script you need to complete the domain value in the `config.py` file
 
 
 #### detect_infected_database.py
 ```
 ./detect_infected_database.py
 ```
-List all infected articles in the database
+List all infected articles in the database and check if the `home_url` and `site_url` are infected
 
-To use this script you need to open it and provide the WordPress database credentials
+To use this script you need to open `config.py` and provide the WordPress database credentials 
 <br>You can find them in the wp-config.php file
+
+You need also to complete the domain value in the `config.py` file
+
 
 
 #### fix_infected_database.py
 ```
 ./fix_infected_database.py
 ```
-Fix all infected articles by removing the payload.
+Fix all infected articles by removing the payload and replace the infected `home_url` and `site_url` in the database.
 
-To use this script you need to open it and provide the WordPress database credentials
+To use this script you need to open `config.py` and provide the WordPress database credentials 
 <br>You can find them in the wp-config.php file
+
+You need also to complete the domain value in the `config.py` file
 
 
 #### payloads_file_to_test_fix.txt
 This file contents all the raw payloads. You can use them to test the `fix_infected_file.py` script and improve it
+
+#### config.py
+This file contents some constants and the detection regex used to find infection in such a way that it's easy to scale up if the botnet migrate to a new domain.
