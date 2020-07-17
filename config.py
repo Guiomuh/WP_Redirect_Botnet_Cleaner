@@ -16,6 +16,25 @@ class c:
     UNDERLINE = '\033[4m'
 
 
+
+#######################################
+##    Identified tmp & log files     ##
+#######################################
+
+# Relative path traces files
+RTF = [ "e.log",
+        "mn",
+        "rebut.log",
+        # letsmakeparty3.ga
+        "sdfsd234",
+        # train.developfirstline.com 
+        "htht"]
+
+# Absolute path traces files
+ATF = ["/tmp/mn"]
+
+
+
 ##########################################
 ## JS Payloads links (without get args) ##
 ##########################################
@@ -38,9 +57,6 @@ regex += "|(letsmakeparty3\.ga)"
 regex += "|(developfirstline\.com)"
 
 
-#regex += "|(107,46,100,101,118,101,108,111)"
-
-
 ## JS
 # (general) "text/javascript" string offuscated 
 regex += "|(116,101,120,116,47,106,97,118,97,115,99,114,105,112,116)"
@@ -49,7 +65,6 @@ regex += "|(function makemee)"
 
 # "lobbydesires" string offuscated
 regex += "|(108,111,98,98,121,100,101,115,105,114,101,115)"
-
 
 
 ## PHP

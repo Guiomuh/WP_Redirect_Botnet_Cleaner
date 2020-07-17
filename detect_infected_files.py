@@ -46,13 +46,13 @@ if len(INFECTED) != 0:
     with open('infected_list.txt', 'w') as f:
         for i in INFECTED:
             f.write("%s\n" % i)
-    print("\n[*] infected file list written to: infected_list.txt")
+    print("\n[*] infected file list written to: "+c.BOLD+"infected_list.txt"+c.ENDC)
 
 
 
-print("\n[*] Search for temp/log files used by the virus")
-relative_traces_files = ["e.log","mn","rebut.log"]
-absolute_traces_files = ["/tmp/mn"]
+print("\n[*] Search for temp/log files used by the virus..")
+relative_traces_files = RTF
+absolute_traces_files = ATF
 L = []
 
 for rtf in relative_traces_files:
@@ -66,8 +66,9 @@ for atf in absolute_traces_files:
 
 # Print the tmp/log files search result 
 if (len(L) != 0):
-    print("\n[*] "+c.WARNING+str(len(L))+c.ENDC+" possible tmp/log files used by the virus have been found:")
+    print("\n[*] "+c.FAIL+str(len(L))+c.ENDC+" possible tmp/log files used by the virus have been found:"+c.WARNING)
     for l in L:
-        print("  - {}".format(str(l)))
+        print("    - {}".format(str(l)))
+    print(c.FAIL+"\n    /!\\"+c.ENDC+" Theses tmp/log files aren't deleted by the fix script\n        check them and delete them manually if needed\n")
 else:
-    print("\n[*] "+c.GREEN+str(len(L))+c.ENDC+" tmp/log files used by the virus have been found:")
+    print("\n[*] "+c.GREEN+"0"+c.ENDC+" tmp/log files used by the virus have been found")
