@@ -8,12 +8,16 @@ from mysql.connector import Error
 # import detection regex & constants from constant.py file
 from config import *
 
+error = False
 
 if (DB_NAME == '' or DB_HOST == '' or DB_USER == '' or DB_PASSWORD == ''):
     print("\n /!\ NO DATABASE CREDS \n Open the 'config.py' file and please provide the WordPress database credentials\n You can find them in the wp-config.php file\n")
-    exit(0)
-
-
+    error = True
+if (domain == ''):
+    print("\n /!\ NO Domain given in the configuration\n Open 'config.py' and please provide the WordPress domain (like 'https://www.yourdomain.com')\n In some cases this virus replace in the database the host_url and site_url of your site\n")
+    error = True
+if error:
+    exit(1)
 INFECTED_POSTS = []
 
 try:
@@ -26,7 +30,7 @@ except Error as e:
 
 
 try:
-    # search POSTS table like the virus 
+    # Search POSTS table like the virus 
     cur.execute("SELECT TABLE_SCHEMA,TABLE_NAME FROM information_schema.TABLES WHERE `TABLE_NAME` LIKE '%post%'")
     rows = cur.fetchall()
     #print(rows)
@@ -52,6 +56,13 @@ try:
                 if bool(re.search(regex, post[1], flags = re.M)):
                     INFECTED_POSTS.append(post[0])
 
+    # Get the site_url and host_url values
+    cur.execute("SELECT option_value FROM wp_configs WHERE option_name=siteurl")
+    site_url = cur.fetchone()
+    cur.execute("SELECT option_value FROM wp_configs WHERE option_name=home")
+    home_url = cur.fetchone()
+
+
 except Error as e:
     print("MySQL Error : ",e)
     exit(1)
@@ -63,7 +74,17 @@ finally:
 
 
 # Print infected posts names
-print("")
-print("> {} infected articles".format(len(INFECTED_POSTS)))
+print("\n> {} infected articles".format(len(INFECTED_POSTS)))
 for i in INFECTED_POSTS:
     print("  - {}".format(i))
+
+# Print alert if site_url or home_url changed:
+if (site_url!=domain):
+    print("\n/!\\ changements detected in site_url database values:")
+    print("-> '"+c.FAIL+site_url+c.ENDC+"' instead of '"+domain+"'")
+if (home_url!=domain):
+    print("\n/!\\ changements detected in home_url database values:")
+    print("-> '"+c.FAIL+home_url+c.ENDC+"' instead of '"+domain+"'")
+if (home_url!=domain or site_url!=domain):
+    print("theses values will be replaced in the './fix_infected_database.py'")
+

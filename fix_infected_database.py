@@ -8,10 +8,16 @@ from mysql.connector import Error
 # import detection regex & constants from constant.py file
 from config import *
 
+error = False
 
 if (DB_NAME == '' or DB_HOST == '' or DB_USER == '' or DB_PASSWORD == ''):
     print("\n /!\ NO DATABASE CREDS \n Open the 'config.py' file and please provide the WordPress database credentials\n You can find them in the wp-config.php file\n")
-    exit(0)
+    error = True
+if (domain == ''):
+    print("\n /!\ NO Domain given in the configuration\n Open 'config.py' and please provide the WordPress domain (like 'https://www.yourdomain.com')\n In some cases this virus replace in the database the host_url and site_url of your site\n")
+    error = True
+if error:
+    exit(1)
 
 print("/!\ Be safe & make a backup before !")
 k = input("Write 'yes' to continue: ")
@@ -49,6 +55,15 @@ try:
                 if bool(re.search(regex, post[0], flags = re.M)):
                     cur.execute("UPDATE "+TABLE_SCHEMA+"."+TABLE_NAME+" set post_content = REPLACE(post_content,\"<script src='https://letsmakeparty3.ga/l.js?qs=1' type='text/javascript'></script>\",\"\") WHERE post_content LIKE '%letsmakeparty3%'")
                     CLEANED_POSTS += 1
+    
+    # Get the site_url and host_url values
+    cur.execute("SELECT option_value FROM wp_configs WHERE option_name=siteurl")
+    site_url = cur.fetchone()
+    cur.execute("SELECT option_value FROM wp_configs WHERE option_name=home")
+    home_url = cur.fetchone()
+    # Fix site_url & home_url if infected
+    if (home_url!=domain or site_url!=domain):
+        cur.execute("UPDATE wp_configs SET option_value = \""+domain+"\" WHERE option_name=home OR option_name=siteurl")
 
 except Error as e:
     print("MySQL Error : ",e)

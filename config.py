@@ -4,6 +4,11 @@ DB_NAME = ''
 DB_USER = ''
 DB_PASSWORD = ''
 
+# In some cases this virus replace the host_url and site_url of your site in the database 
+# So we need your full domain (ex: "https://www.yourdomain.com") to check & fix the infection
+domain = ''
+
+
 # Add Colors
 class c:
     HEADER = '\033[95m'

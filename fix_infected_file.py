@@ -5,14 +5,14 @@ import re, sys
 from config import *
 
 
-if len(sys.argv) != 3:
+if len(sys.argv) != 2:
     print("\nUsage:")
-    print("    ./fix_infected_file.py <INFECTED_FILES_LIST> <FULL_DOMAIN_NAME>")
-    print("")
-    print("In some cases this virus replace the wp_host_url of your site with a bad one ! So this script need your full domain name (like 'https://example.com' ) to fix that\n")
+    print("    ./fix_infected_file.py <INFECTED_FILES_LIST>")
     exit(1)
 
-domain = sys.argv[2]
+if (domain == ''):
+    print("\n /!\ NO Domain given in the configuration\n Open 'config.py' and please provide the WordPress domain (like 'https://www.yourdomain.com')\n In some cases this virus replace in the database the host_url and site_url of your site\n")
+    exit(1)
 
 print("/!\ Be safe & make a backup before !")
 k = input("Write 'yes' to continue: ")
