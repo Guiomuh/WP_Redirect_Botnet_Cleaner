@@ -34,13 +34,13 @@ python3 -m pip install tqdm mysql-connector-python
 ./detect_infected_files.py <PATH>
 ```
 Search all js, php & html files recursively in the given path and list the infected ones in the file `infected_list.txt`<br>
-Then you can use this list with the `fix_infected_file.py` script to fix them.
+Then you can use this list with the `fix_infected_files.py` script to fix them.
 
-This script also search for temp/log files used by the malware and raise an alert but this files aren't deleted in the `fix_infected_file.py` script due to the high risk of false positive.
+This script also search for temp/log files used by the malware and raise an alert but this files aren't deleted in the `fix_infected_files.py` script due to the high risk of false positive.
 
-#### fix_infected_file.py
+#### fix_infected_files.py
 ```
-./fix_infected_file.py <INFECTED_FILES_LIST>
+./fix_infected_files.py <INFECTED_FILES_LIST>
 ```
 This script use the file created by `detect_infected_files.py` to fix all infected files.<br><br>
 
@@ -73,7 +73,7 @@ You need also to complete the domain value in the `config.py` file
 
 
 #### payloads_file_to_test_fix.txt
-This file contents all the raw payloads. You can use them to test the `fix_infected_file.py` script and improve it
+This file contents all the raw payloads. You can use them to test the `fix_infected_files.py` script and improve it
 
 #### config.py
 This file contents some constants and the detection regex used to find infection in such a way that it's easy to scale up if the botnet migrate to a new domain.

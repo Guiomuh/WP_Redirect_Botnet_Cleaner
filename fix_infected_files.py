@@ -7,7 +7,7 @@ from config import *
 
 if len(sys.argv) != 2:
     print("\nUsage:")
-    print("    ./fix_infected_file.py <INFECTED_FILES_LIST>")
+    print("    ./fix_infected_files.py <INFECTED_FILES_LIST>")
     exit(1)
 
 if (domain == ''):
