@@ -35,7 +35,6 @@ for input_file in tqdm(myfiles):
 
     except OSError as e:
         # Handle File Not Found (wordpress temp files)
-        #print(e)
         continue
 
 
@@ -57,12 +56,14 @@ L = []
 
 for rtf in relative_traces_files:
     absolute_traces_files += list(Path(p).rglob(rtf))
-            
+
 for atf in absolute_traces_files:
-    if isfile(str(atf)):
-        L.append(str(atf))
-
-
+    try:
+        if isfile(str(atf)):
+            L.append(str(atf))
+    except OSError as e:
+        # Handle File Not Found (wordpress temp files)
+        continue
 
 # Print the tmp/log files search result 
 if (len(L) != 0):
