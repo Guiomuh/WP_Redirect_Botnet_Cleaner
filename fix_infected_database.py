@@ -56,14 +56,20 @@ try:
                     cur.execute("UPDATE "+TABLE_SCHEMA+"."+TABLE_NAME+" set post_content = REPLACE(post_content,\"<script src='https://letsmakeparty3.ga/l.js?qs=1' type='text/javascript'></script>\",\"\") WHERE post_content LIKE '%letsmakeparty3%'")
                     CLEANED_POSTS += 1
     
+    # Find wp_option table if renamed
+    cur.execute("SELECT TABLE_NAME FROM information_schema.TABLES WHERE `TABLE_NAME` LIKE '%wp_options%' LIMIT 1")
+    opt_table = cur.fetchone()[0]
+
     # Get the site_url and host_url values
-    cur.execute("SELECT option_value FROM wp_configs WHERE option_name=siteurl")
-    site_url = cur.fetchone()
-    cur.execute("SELECT option_value FROM wp_configs WHERE option_name=home")
-    home_url = cur.fetchone()
+    cur.execute("SELECT option_value FROM "+opt_table+" WHERE option_name='siteurl'")
+    site_url = cur.fetchone()[0]
+    cur.execute("SELECT option_value FROM "+opt_table+" WHERE option_name='home'")
+    home_url = cur.fetchone()[0]
+
     # Fix site_url & home_url if infected
     if (home_url!=domain or site_url!=domain):
-        cur.execute("UPDATE wp_configs SET option_value = \""+domain+"\" WHERE option_name=home OR option_name=siteurl")
+        cur.execute("UPDATE "+opt_table+" SET option_value='"+domain+"' WHERE option_name='home' OR option_name='siteurl'")
+        print("\n> Infected home_url and site_url replaced with: "+c.GREEN+domain+c.ENDC)
 
 except Error as e:
     print("MySQL Error : ",e)
@@ -74,6 +80,5 @@ finally:
         cur.close()
         conn.close()
 
-print("")
-print( "> {} cleaned articles".format(CLEANED_POSTS))
+print( "\n> {} cleaned articles".format(CLEANED_POSTS))
 

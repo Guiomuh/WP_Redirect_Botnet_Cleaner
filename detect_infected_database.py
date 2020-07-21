@@ -56,11 +56,15 @@ try:
                 if bool(re.search(regex, post[1], flags = re.M)):
                     INFECTED_POSTS.append(post[0])
 
+    # Find wp_option table if renamed
+    cur.execute("SELECT TABLE_NAME FROM information_schema.TABLES WHERE `TABLE_NAME` LIKE '%wp_options%' LIMIT 1")
+    opt_table = cur.fetchone()[0]
+
     # Get the site_url and host_url values
-    cur.execute("SELECT option_value FROM wp_configs WHERE option_name=siteurl")
-    site_url = cur.fetchone()
-    cur.execute("SELECT option_value FROM wp_configs WHERE option_name=home")
-    home_url = cur.fetchone()
+    cur.execute("SELECT option_value FROM "+opt_table+" WHERE option_name='siteurl'")
+    site_url = cur.fetchone()[0]
+    cur.execute("SELECT option_value FROM "+opt_table+" WHERE option_name='home'")
+    home_url = cur.fetchone()[0]
 
 
 except Error as e:
@@ -74,7 +78,7 @@ finally:
 
 
 # Print infected posts names
-print("\n> {} infected articles".format(len(INFECTED_POSTS)))
+print("\n[*] {} infected articles".format(len(INFECTED_POSTS)))
 for i in INFECTED_POSTS:
     print("  - {}".format(i))
 
@@ -82,9 +86,15 @@ for i in INFECTED_POSTS:
 if (site_url!=domain):
     print("\n/!\\ changements detected in site_url database values:")
     print("-> '"+c.FAIL+site_url+c.ENDC+"' instead of '"+domain+"'")
+else:
+    print("\n[*] site_url: "+c.GREEN+"OK"+c.ENDC+" ("+site_url+")")
+
 if (home_url!=domain):
     print("\n/!\\ changements detected in home_url database values:")
     print("-> '"+c.FAIL+home_url+c.ENDC+"' instead of '"+domain+"'")
+else:
+    print("\n[*] home_url: "+c.GREEN+"OK"+c.ENDC+" ("+home_url+")")
+
 if (home_url!=domain or site_url!=domain):
-    print("theses values will be replaced in the './fix_infected_database.py'")
+    print("\nTheses values will be replaced in the './fix_infected_database.py'")
 

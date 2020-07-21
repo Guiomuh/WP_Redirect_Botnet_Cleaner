@@ -44,8 +44,6 @@ This script also search for temp/log files used by the malware and raise an aler
 ```
 This script use the file created by `detect_infected_files.py` to fix all infected files.<br><br>
 
-Before running this script you need to complete the domain value in the `config.py` file
-
 
 #### detect_infected_database.py
 ```
