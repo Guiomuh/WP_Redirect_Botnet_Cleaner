@@ -49,7 +49,10 @@ ATF = ["/tmp/mn"]
 SIG_CLEAR = [ "lobbydesires.com",
               "letsmakeparty3.ga",
               "stivenfernando.com",
-              "developfirstline.com" ]
+              "developfirstline.com",
+              "dontstopthismusics.com",
+              "blackentertainments.com",
+              "digestcolect.com" ]
 
 ## Auto generate PHP/JS offuscated payloads from signature str
 

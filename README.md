@@ -9,7 +9,11 @@ This botnet use the following domain names:
 - letsmakeparty3.ga
 - lobbydesires.com
 - train.developfirstline.com
+- track.developfirstline.com
 - ws.stivenfernando.com
+- dontstopthismusics.com
+- blackentertainments.com
+- js.digestcolect.com
 
 This malware is very invasive it can infect all js, php, html files and all articles in the database of your WordPress.
 

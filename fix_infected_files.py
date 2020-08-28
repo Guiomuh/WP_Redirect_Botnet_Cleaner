@@ -57,6 +57,8 @@ fixregex.append([re.compile("""(var gfhfghfhfgj[^<>{}]*47,47,119,115,46,115,116,
 for URL in SIG_CLEAR:
     fixregex.append([re.compile("""(<tr><td class="aws"><a href="[^"<>]*"""+re.escape(URL)+"""[^?\\n%]*%<\/td><\/tr>)"""),""])
 
+# js.digestcolect.com
+fixregex.append([re.compile("""<script type=text\/javascript>eval\(String\.fromCharCode\(118,97,114,[\d,]*115,91,48,93,41,59,125\)\);<\/script>"""),""])
 
 fixed = 0
 

